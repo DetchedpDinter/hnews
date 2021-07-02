@@ -34,8 +34,11 @@ const small = {
 const Loading = () =>
   <i className="fa fa-spinner fa-spin" alt="Loading" style={{...big, ...margin}}></i>
 
-const arrowUp = () =>
-  <i class="fas fa-arrow-up" alt="ArrowUp" style={{small}}></i>
+const ArrowDown = () =>
+  <i class="fa fa-arrow-down" alt="ArrowDown" style={small}></i>
+
+const ArrowUp = () =>
+  <i class="fa fa-arrow-up" alt="ArrowUp" style={small}></i>
 
 const DEFALT_QUERY = 'redux';
 const DEFAULT_HPP = 50;
@@ -248,6 +251,7 @@ const Table = ({ list, onDismiss, sortKey, onSort, isSortReverse }) => {
             sortKey = {'TITLE'}
             onSort = {onSort}
             activSortKey = {sortKey}
+            isSortReverse = {isSortReverse}
           >
             TITLE
           </Sort>
@@ -257,6 +261,7 @@ const Table = ({ list, onDismiss, sortKey, onSort, isSortReverse }) => {
             sortKey = {'AUTHOR'}
             onSort = {onSort}
             activSortKey = {sortKey}
+            isSortReverse = {isSortReverse}
           >
             AUTHOR
           </Sort>
@@ -266,6 +271,7 @@ const Table = ({ list, onDismiss, sortKey, onSort, isSortReverse }) => {
             sortKey = {'COMMENTS'}
             onSort = {onSort}
             activSortKey = {sortKey}
+            isSortReverse = {isSortReverse}
           >
             COMMENTS
           </Sort>
@@ -275,6 +281,7 @@ const Table = ({ list, onDismiss, sortKey, onSort, isSortReverse }) => {
             sortKey = {'POINTS'}
             onSort = {onSort}
             activSortKey = {sortKey}
+            isSortReverse = {isSortReverse}
           >
             POINTS
           </Sort>
@@ -313,18 +320,31 @@ const Button = ({ onClick, className = '', children }) =>
     { children }
   </button>
 
-const Sort = ({ sortKey, onSort, children, activSortKey }) => {
+const Sort = ({ sortKey, onSort, children, activSortKey, isSortReverse }) => {
+  const status = sortKey === activSortKey;
   const sortClass = classNames(
     'button-inline',
-    { 'button-active' : sortKey === activSortKey }
+    { 'button-active' : status }
   );
-  return(
-    <Button 
-      onClick={() => onSort(sortKey)}
-      className={sortClass}
+  
+  const arrow = isSortReverse ? <ArrowDown /> : <ArrowUp />;
+
+  const result = status ? 
+    <Button
+        onClick={() => onSort(sortKey)}
+        className={sortClass}
     >
-      {children}
-    </Button>);
+        {children}
+        {arrow}
+    </Button>
+    :
+    <Button 
+        onClick={() => onSort(sortKey)}
+        className={sortClass}
+    >
+        {children}
+    </Button>;
+  return result;
 }
 
 Button.defaultProps = {
