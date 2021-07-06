@@ -24,11 +24,17 @@ exports[`App has a valid snapshot 1`] = `
     <div
       className="interactions"
     >
-      <button
-        onClick={[Function]}
-      >
-        More
-      </button>
+      <i
+        alt="Loading"
+        className="fa fa-spinner fa-spin"
+        style={
+          Object {
+            "fontSize": "250%",
+            "marginBottom": "150px",
+            "marginTop": "250px",
+          }
+        }
+      />
     </div>
   </div>
 </div>
@@ -60,6 +66,79 @@ exports[`Table has a valid snapshot 1`] = `
 <div
   className="table"
 >
+  <div
+    className="table-header"
+  >
+    <span
+      style={
+        Object {
+          "width": "40%",
+        }
+      }
+    >
+      <button
+        className="button-inline"
+        onClick={[Function]}
+        type="button"
+      >
+        TITLE
+      </button>
+    </span>
+    <span
+      style={
+        Object {
+          "width": "30%",
+        }
+      }
+    >
+      <button
+        className="button-inline"
+        onClick={[Function]}
+        type="button"
+      >
+        AUTHOR
+      </button>
+    </span>
+    <span
+      style={
+        Object {
+          "width": "10%",
+        }
+      }
+    >
+      <button
+        className="button-inline"
+        onClick={[Function]}
+        type="button"
+      >
+        COMMENTS
+      </button>
+    </span>
+    <span
+      style={
+        Object {
+          "width": "10%",
+        }
+      }
+    >
+      <button
+        className="button-inline"
+        onClick={[Function]}
+        type="button"
+      >
+        POINTS
+      </button>
+    </span>
+    <span
+      style={
+        Object {
+          "width": "10%",
+        }
+      }
+    >
+      Archive
+    </span>
+  </div>
   <div
     className="table-row"
   >

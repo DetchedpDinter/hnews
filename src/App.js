@@ -101,26 +101,9 @@ class App extends Component {
   }
 
   setSearchTopStories(result){
-    const { hits, page } = result;
-    const { searchKey, results } = this.state;
-
-    const oldHits = results && results[searchKey]
-      ? results[searchKey].hits
-      : [];
-
-    const updatedHits = [
-      ...oldHits,
-      ...hits
-    ];
-
-    this.setState({ 
-      results : {
-        ...results,
-        [searchKey] : { hits : updatedHits, page }
-      },
-      isLoading: false
-    });
-  }
+    const { hits, page } = result;  
+    this.setState(updateSearchTopStoriesState( hits, page ));
+  }  
 
   onDismiss(id){
     const { searchKey, results } = this.state;
@@ -183,18 +166,18 @@ class App extends Component {
             Search
           </Search>
           { error
-          ? <div className='interactions'>
-              <h1 style={margin}><center>Something went wrong</center></h1>
-            </div> 
+            ? <div className='interactions'>
+                <h1 style={margin}><center>Something went wrong</center></h1>
+              </div> 
             : results &&
             <Table 
               list = {list}
               onDismiss = {this.onDismiss}
+              isLoading = {isLoading}
             />
           }
           <div className="interactions">
-            { error ? null : isLoading
-            ? <Loading />
+            { error ? null : isLoading ? <Loading />
             : <button 
               onClick = {() => this.fetchSearchTopStories(searchKey, page + 1)}>
               More
@@ -203,6 +186,27 @@ class App extends Component {
         </div>
       </div>
     );
+  }
+}
+
+const updateSearchTopStoriesState = ( hits, page ) => ( prevState ) => {
+  const { searchKey, results } = prevState;
+  
+  const oldHits = results && results[searchKey]
+  ? results[searchKey].hits
+  : [];
+
+  const updatedHits = [
+    ...oldHits,
+    ...hits
+  ];
+
+  return { 
+    results : {
+      ...results,
+      [searchKey] : { hits : updatedHits, page }
+    },    
+    isLoading: false
   }
 }
 
@@ -242,7 +246,8 @@ class Table extends Component {
   render(){
   const {
     list,
-    onDismiss, 
+    onDismiss,
+    isLoading,
   } = this.props;
 
   const {
@@ -255,8 +260,8 @@ class Table extends Component {
         ? sortedList.reverse()
         : sortedList;
 
-  return(
-    <div className='table'> 
+  return isLoading ? null : (
+    <div className='table'>
       <div className='table-header'>
         <span style={{ width:'40%' }}>
           <Sort
